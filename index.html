@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="copyright" content="© 2023 Esteban Arroyo">
+    <meta name="author" content="Esteban Arroyo" />
+    <meta name="robots" content="index"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <title>Tools Python</title>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.0.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.3.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.3.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@holoviz/panel@1.3.1/dist/panel.min.js"></script>
+
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.05.1/pyscript.css" />
+
+    <!-- This script tag bootstraps PyScript -->
+    <script defer src="https://pyscript.net/releases/2023.05.1/pyscript.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <!-- bootstrap icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+
+</head>
+
+<style>
+.bi-laptop:hover {
+    font-size: 80px;
+    color: red;
+}
+#subtitle:hover {
+    font-size: 20px;
+    color: red;
+}
+</style>
+
+
+
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">
+            <i class="bi bi-tools" style="font-size:30px"></i>
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="col-sm text-start">
+            <p class="text-white-50 fw-bold">  &copy; Derechos Reservados - Esteban Arroyo 2023</p>
+          </div>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ms-auto">
+              <a class="nav-link" href="#inicio">Inicio</a>
+              <a class="nav-link" href="#">estebanlab@gmail.com</a>
+              <!-- <a class="nav-link" href="#">Otros</a>-->
+            </div>
+          </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <p class="text-center fw-bold fs-1">APLICACIONES WEB HECHAS CON PYTHON</p>
+        <!--<p id="subtitle" class="text-center">xxxxxx <a href="#"> <i class="bi bi-laptop" style="font-size: 2rem; color: cornflowerblue;"></i> </a></p>-->
+    </div>
+
+    <div class="container py-2">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <!--<a class="nav-link" id="nav-home-tab" data-bs-toggle="tab" href="#home" role="tab" aria-controls="nav-home" aria-selected="true">Eliminar Fondo</a>-->
+              <a class="nav-link active" id="nav-clave-tab" data-bs-toggle="tab" href="#clave" role="tab" aria-controls="nav-clave" aria-selected="false">Generador de Claves</a>
+              <a class="nav-link" id="nav-pdf-tab" data-bs-toggle="tab" href="#pdf" role="tab" aria-controls="nav-pdf" aria-selected="false">Unir dos PDF</a>
+              <a class="nav-link" id="nav-qr-tab" data-bs-toggle="tab" href="#qr" role="tab" aria-controls="nav-qr" aria-selected="false">Generar Código QR</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="myTabContent">
+            <!--<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <h4 class="py-2">Ingrese una imagen en formato jpg, jepg o png</h4>
+                <div id="fileinput" class="py-2"></div>
+            </div>-->
+            
+            <div class="tab-pane fade show active" id="clave" role="tabpanel" aria-labelledby="clave-tab">
+                <h4 class="py-2">Generar clave solo con numeros y letras mayúsculas y minusculas</h4>
+                <h5 class="py-1">Ingrese la cantidad de caracteres que desee para su clave</h4>
+                <div id="num_input" class="py-1"></div>
+                <div id="password" class="py-1"></div>
+            </div>
+
+            <div class="tab-pane fade" id="pdf" role="tabpanel" aria-labelledby="pdf-tab">
+                <h4 class="py-2">Unir dos ficheros en formato PDF</h4>
+                <div id="fileinput" class="py-2"></div>
+                <div id="mensaje" class="py-1"></div>
+            </div>
+            
+            <div class="tab-pane fade" id="qr" role="tabpanel" aria-labelledby="qr-tab">
+                <h4 class="py-2">Generar codigo QR</h4>
+
+                <div class="container py-5">
+                    <div id="textinput" class="py-2"></div>
+                    <div><p id="salida" class="h3"></p></div>
+                    <div id="imagen"></div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+<py-config>
+packages = ["https://cdn.holoviz.org/panel/1.3.1/dist/wheels/bokeh-3.3.0-py3-none-any.whl", 
+"https://cdn.holoviz.org/panel/1.3.1/dist/wheels/panel-1.3.1-py3-none-any.whl", "pypdf2", "qrcode", "Pillow", "matplotlib"]
+</py-config>
+
+<py-script>
+import io
+import js
+from js import document
+import panel as pn
+import random
+from random import sample
+from PyPDF2 import PdfWriter
+from PyPDF2 import PdfReader
+import qrcode
+from PIL import Image
+import matplotlib.pyplot as plt
+
+pn.extension()
+
+#file_input = pn.widgets.FileInput(name='ingresa', width=300)
+#button_upload = pn.widgets.Button(name='Cargar', button_type='primary', width=100)
+#row = pn.Row(file_input, button_upload, height=100).servable(target='fileinput')
+
+#Para generar claves
+int_input = pn.widgets.IntInput(value=0, step=1, start=0, end=1000, width=100)
+button_upload = pn.widgets.Button(name='Procesar', button_type='primary', width=100)
+row = pn.Row(int_input, button_upload).servable(target='num_input')
+
+numeros = list(range(1,10,1))
+letras = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+letras_min = []
+
+for i in letras:
+    letras_min.append(i.lower())
+
+secuencia = letras + letras_min + numeros
+
+#Para Fusionar PDFs
+fusionador = PdfWriter()
+file_input1 = pn.widgets.FileInput(name='ingresa PDF1', width=300)
+file_input2 = pn.widgets.FileInput(name='ingresa PDF2', width=300)
+button_upload2 = pn.widgets.Button(name='Unir', button_type='primary', width=100)
+col = pn.Column("## Ingrese los ficheros PDFs", file_input1, file_input2, button_upload2).servable(target='fileinput')
+
+
+#Para Generar Codigo QR
+text_input = pn.widgets.TextInput(name='Ingrese una dirección web', placeholder='Por ejemplo: https://escaladenotas.cl/')
+button_upload3 = pn.widgets.Button(name='Crear', button_type='primary', width=100)
+pn.Column(text_input, button_upload3).servable(target='textinput')
+
+
+def process_file(*ags, **kws):
+    if int_input.value is not None:
+        clave_length = int_input.value
+        password_union = sample(secuencia, clave_length)
+        password_result = "".join(map(str, password_union))
+        pyscript.write("password", "La clave generada es: "+ password_result)
+
+
+def unir_pdf(*ags, **kws):
+    if file_input1.value is not None:
+        fichero1 = io.BytesIO(file_input1.value)
+        fichero1.seek(0)
+        fusionador.append(fichero1)
+    if file_input2.value is not None:
+        fichero2 = io.BytesIO(file_input2.value)
+        fichero2.seek(0)
+        fusionador.append(fichero2)
+        #for pdf in [fichero1, fichero2]:
+        #    fusionador.append(pdf)
+    output = open("salida.pdf", "wb")
+    fusionador.write(output)
+    fusionador.close()
+    #pyscript.write("mensaje", "Ficheros Unidos con éxito")
+    pn.widgets.FileDownload(file="salida.pdf", button_type='success', auto=False, embed=False, name="Click para descargar").servable(target="mensaje")
+
+def genera(*args, **kwargs):
+	if text_input.value is not None:
+		direc = text_input.value
+		fig, ax = plt.subplots()
+		qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
+		qr.add_data(direc)
+		img = qr.make_image()
+		plt.imshow(img , cmap = 'gray')
+		plt.axis("off")
+		pyscript.write('imagen', fig)
+		pyscript.write("salida", "Código generado con éxito!!")
+
+
+button_upload.on_click(process_file)  
+button_upload2.on_click(unir_pdf)
+button_upload3.on_click(genera)
+</py-script>
+
+    
+
+
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>
