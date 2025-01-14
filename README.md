@@ -17,3 +17,5 @@ En este proyecto queremos demostrar la utilidad de pyscript para crear aplicacio
 <p>
 Para ver el funcionamiento de esta página, se encuentra en el siguiente enlace: https://estebanlab2021.github.io/tools/ 
 </p>
+
+![3appswebs](https://github.com/user-attachments/assets/52ea7e7d-6f98-4281-b24d-c93331ad4671)
